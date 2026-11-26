@@ -1,27 +1,71 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Product CRUD</title>
   <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-  <h1>Product CRUD</h1>
+  <header class="topbar">
+    <h1>Product CRUD</h1>
+    <p>Add, search, edit and remove products</p>
+  </header>
 
-  <form id="add-product-form">
-    <h2>Add Product</h2>
-    <label for="name">Name:</label>
-    <input type="text" id="name" name="name" required>
-    <label for="price">Price:</label>
-    <input type="number" id="price" name="price" required step="0.01">
-    <button type="submit">Add</button>
-  </form>
+  <main class="container">
+    <div id="message" class="message" role="status" hidden></div>
 
-  <ul id="products"></ul>
+    <section class="top-grid">
+      <!-- Add product -->
+      <form id="add-product-form" class="card">
+        <h2>Add Product</h2>
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" required>
+        <label for="price">Price</label>
+        <input type="number" id="price" name="price" required step="0.01" min="0">
+        <label for="description">Description</label>
+        <textarea id="description" name="description" rows="3"></textarea>
+        <button type="submit" class="btn btn-primary">Add</button>
+      </form>
+
+      <!-- Search by ID -->
+      <section class="card">
+        <h2>Search Product</h2>
+        <form id="search-form" class="inline-form">
+          <select id="search-by" name="searchBy" aria-label="Search by">
+            <option value="name">Name</option>
+            <option value="id">ID</option>
+          </select>
+          <input type="text" id="search-value" name="searchValue" placeholder="Type part of the name" required>
+          <button type="submit" class="btn btn-primary">Search</button>
+          <button type="button" id="clear-search" class="btn btn-ghost">Clear</button>
+        </form>
+        <div id="search-result" class="search-result"></div>
+      </section>
+    </section>
+
+    <!-- Update product (shown when the Update button of a product is clicked) -->
+    <form id="update-product-form" class="card card-edit" hidden>
+      <h2>Update Product</h2>
+      <input type="hidden" name="productId" id="update-id">
+      <label for="update-name">Name</label>
+      <input type="text" id="update-name" name="name" required>
+      <label for="update-price">Price</label>
+      <input type="number" id="update-price" name="price" required step="0.01" min="0">
+      <label for="update-description">Description</label>
+      <textarea id="update-description" name="description" rows="3"></textarea>
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Save changes</button>
+        <button type="button" id="cancel-update" class="btn btn-ghost">Cancel</button>
+      </div>
+    </form>
+
+    <section>
+      <h2 class="section-title">Products <span id="product-count" class="badge">0</span></h2>
+      <div id="products" class="products"></div>
+    </section>
+  </main>
 
   <script src="app.js"></script>
-  <script>
-    // Call fetchProducts() when the page loads
-    window.addEventListener('load', fetchProducts);
-  </script>
 </body>
 </html>
